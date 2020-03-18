@@ -80,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(chooser);
                 }
                 return true;
-//            case R.id.dialog:
-//                AlertDialog.bu
+            case R.id.dialog:
+                DialogCeva dialog = new DialogCeva();
+                dialog.show(getSupportFragmentManager(),"dialog");
+                returnt true;
             default:
                 return super.onOptionsItemSelected(item);
 
