@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:id="@+id/sales_switch"
+        android:visibility="visible"
+        app:key="sale_notifications"
+        app:title="Enable sales notifications" />
+
+    <SwitchPreferenceCompat
+        android:id="@+id/cash_switch"
+        app:key="cashing"
+        app:title="Enable cashing"/>
+
+    <SwitchPreferenceCompat
+        android:id="@+id/data_switch"
+        app:key="mobile_data"
+        app:title="Enable app to use mobile data"/>
+
+
+    <Preference
+        app:key="feedback"
+        app:title="Send feedback"
+        app:summary="Report technical issues or suggest new features"/>
+
+</PreferenceScreen>
