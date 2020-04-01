@@ -3,9 +3,18 @@ package com.example.onlineshop;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,8 +25,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import android.util.Log;
+
+import static android.location.LocationManager.GPS_PROVIDER;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,13 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        Log.d("MainActivity_onCreate","s-a apelat onCreate");
+        Log.d("MainActivity_onCreate", "s-a apelat onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        for (int i = 0; i < myStrings.length; i++){
-            itemMap.put(myStrings[i],myStrings[i] + " details");
+        for (int i = 0; i < myStrings.length; i++) {
+            itemMap.put(myStrings[i], myStrings[i] + " details");
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,myStrings);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, myStrings);
         ListView view = findViewById(R.id.listView);
         view.setAdapter(adapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -47,25 +61,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState){
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.d("MainActivity_Settings", "s-a apelat onSaveInstanceState");
         super.onSaveInstanceState(savedInstanceState);
         TextView detailsText = findViewById(R.id.textView);
         String finalString = detailsText.getText().toString();
-        savedInstanceState.putString("Description",finalString);
+        savedInstanceState.putString("Description", finalString);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.settings:
-                Log.d("MainActivity_Settings","a fost apasat Settings");
+                Log.d("MainActivity_Settings", "a fost apasat Settings");
                 Intent intent = new Intent(this, SetingsMenu.class);
                 startActivity(intent);
                 return true;
@@ -75,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT, textMessage);
                 sendIntent.setType("text/plain");
-                String title = "Share thi item with";
+                String title = "Share this item with";
                 Intent chooser = Intent.createChooser(sendIntent, title);
                 // Verify that the intent will resolve to an activity
                 if (sendIntent.resolveActivity(getPackageManager()) != null) {
@@ -84,7 +99,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.dialog:
                 DialogCeva dialog = new DialogCeva();
-                dialog.show(getSupportFragmentManager(),"dialog");
+                dialog.show(getSupportFragmentManager(), "dialog");
+                return true;
+            case R.id.sensors:
+                Intent sensor_intent = new Intent(this, SensorLayout.class);
+                startActivity(sensor_intent);
+                return true;
+            case R.id.gps_location:
+                Intent location_intent = new Intent(this, GPS_Location_Dialog.class);
+                startActivity(location_intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
