@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,12 +39,15 @@ public class MainActivity extends AppCompatActivity {
     String[] myStrings = {"item1","item2","item3"};
     HashMap<String, String> itemMap = new HashMap<String, String>();
     int pos;
+    Button cameraButton;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         Log.d("MainActivity_onCreate", "s-a apelat onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cameraButton = (Button) findViewById(R.id.cameraButton);
+
         for (int i = 0; i < myStrings.length; i++) {
             itemMap.put(myStrings[i], myStrings[i] + " details");
         }
@@ -59,7 +63,21 @@ public class MainActivity extends AppCompatActivity {
                 detailsText.setText(finalString);
             }
         });
+        cameraButton.setOnClickListener(cameraButtonListener);
     }
+
+    View.OnClickListener cameraButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            openCameraActivity();
+        }
+    };
+
+    private void openCameraActivity() {
+        Intent cameraIntent = new Intent(this,camera_activity.class);
+        startActivity(cameraIntent);
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         Log.d("MainActivity_Settings", "s-a apelat onSaveInstanceState");
