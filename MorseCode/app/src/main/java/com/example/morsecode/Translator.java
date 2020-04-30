@@ -45,12 +45,12 @@ public class Translator  extends AppCompatActivity {
         {
             switch (text.charAt(i)){
                 case ' ':
-                    code += " 7 ";
+                    code += " ";
                     break;
                 default:
                     code += char_to_Code.get(String.valueOf(text.charAt(i)).toUpperCase());
             }
-            code+="3";
+            code+="/";
         }
         return code;
     }
