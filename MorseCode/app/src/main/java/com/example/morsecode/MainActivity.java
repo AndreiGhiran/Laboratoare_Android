@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     TextView morseCodeView;
     EditText inputText;
     Button encodeButton;
+    Button decodeButton;
     Translator translator;
 
     @Override
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         morseCodeView = (TextView) findViewById(R.id.MorceCodeView);
         inputText =  (EditText) findViewById(R.id.text_input);
         encodeButton = (Button) findViewById(R.id.encodeButton);
+        decodeButton = (Button) findViewById(R.id.decodeButton);
         try {
             translator = new Translator(getAssets().open("MorseCode.txt"));
         } catch (IOException e) {
@@ -37,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String textToEncode = String.valueOf(inputText.getText());
                 morseCodeView.setText(translator.Encode(textToEncode));
+            }
+        });
+        decodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String textToEncode = String.valueOf(inputText.getText());
+                morseCodeView.setText(translator.Decode(textToEncode));
             }
         });
     }

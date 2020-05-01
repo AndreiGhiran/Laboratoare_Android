@@ -37,26 +37,29 @@ public class Translator  extends AppCompatActivity {
             code_to_Char.put(line[1].trim(),line[0].trim());
             char_to_Code.put(line[0].trim(),line[1].trim());
         }
+        code_to_Char.put(" "," ");
+        char_to_Code.put(" "," ");
     }
 
     String Encode(String text){
-        String code = "";
-        for(int i = 0; i<text.length();i++)
+        String code = "/";
+        for(int i = 0; i<text.length(); i++)
         {
-            switch (text.charAt(i)){
-                case ' ':
-                    code += " ";
-                    break;
-                default:
-                    code += char_to_Code.get(String.valueOf(text.charAt(i)).toUpperCase());
-            }
-            code+="/";
+            code += char_to_Code.get(String.valueOf(text.charAt(i)).toUpperCase());
+            code += "/";
         }
-        return code;
+        return code.trim();
     }
 
     String Decode(String code){
         String text = "";
+        String[] leters = code.split("/");
+        for( int i = 0; i< leters.length;i++){
+            if(!leters[i].equals("")){
+                text += code_to_Char.get(leters[i]);
+            }
+        }
         return text;
     }
+
     }
