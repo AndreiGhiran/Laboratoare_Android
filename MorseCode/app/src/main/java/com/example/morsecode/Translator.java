@@ -7,11 +7,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Translator  extends AppCompatActivity {
+public class Translator  {
     String[] Characters;
     HashMap<String, String> char_to_Code = new HashMap<String, String>();
     HashMap<String, String> code_to_Char = new HashMap<String, String>();
     InputStream in;
+
     public Translator(InputStream stream){
         in = stream;
         Initialize();
@@ -61,5 +62,4 @@ public class Translator  extends AppCompatActivity {
         }
         return text;
     }
-
-    }
+}
