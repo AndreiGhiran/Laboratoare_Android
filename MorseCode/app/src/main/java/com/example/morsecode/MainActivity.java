@@ -59,29 +59,51 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String textToEncode = String.valueOf(inputText.getText());
-                morseCodeView.setText(translator.Encode(textToEncode));
-
-                flashOn();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        flashOff();
+                String code = translator.Encode(textToEncode);
+                morseCodeView.setText(code);
+                long time = 0, unit = 500;
+                for (int i = 1; i < code.length()-1; i++){
+                    switch(code.charAt(i)){
+                        case '.':
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    flashOn();
+                                }
+                            }, time);
+                            time += unit;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    flashOff();
+                                }
+                            }, time);
+                            time += unit;
+                            break;
+                        case '-':
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    flashOn();
+                                }
+                            }, time);
+                            time += 3 * unit;
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    flashOff();
+                                }
+                            }, time);
+                            time += unit;
+                            break;
+                        case '/':
+                            time += 2 * unit;
+                            break;
+                        case ' ':
+                            time += 2 * unit;
+                            break;
                     }
-                }, 3000);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        flashing = false;
-                        counter += 1;
-                        flashOn();
-                    }
-                }, 6000);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        flashOff();
-                    }
-                }, 9000);
+                }
             }
 
         });
@@ -90,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String textToEncode = String.valueOf(inputText.getText());
                 morseCodeView.setText(translator.Decode(textToEncode));
-                flashOff();
             }
         });
     }
