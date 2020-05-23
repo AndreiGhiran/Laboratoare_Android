@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/share"
+        android:title="SMS"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item android:id="@+id/sendSMS"
+                android:title="Send Coded SMS" />
+            <item android:id="@+id/decodeSMS"
+                android:title="Decode SMS" />
+        </menu>
+    </item>
+
+    <item android:id="@+id/settings"
+        android:title="Settings" />
+
+
+</menu>

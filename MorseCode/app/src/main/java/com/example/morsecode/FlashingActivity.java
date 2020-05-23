@@ -1,53 +1,34 @@
 package com.example.morsecode;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-public class MainActivity extends AppCompatActivity {
+public class FlashingActivity extends AppCompatActivity {
 
-    TextView morseCodeView;
-    EditText inputText;
-    Button encodeButton;
-    Button decodeButton;
     TextView codeView;
+    EditText inputText;
     Button stopButton;
-    Button sosButton;
+    Translator translator;
     private CameraManager mCameraManager;
     private String mCameraId;
-    private boolean hasFlash;
-    Camera.Parameters params;
-    Translator translator;
-    boolean flashing;
-    int counter = 1;
-    Context cont = this;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        flash_check();
+        inputText =  (EditText) findViewById(R.id.text_input);
+        String textToEncode = String.valueOf(inputText.getText());
         mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             mCameraId = mCameraManager.getCameraIdList()[0];
@@ -59,33 +40,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        interfaceSetUp();
-    }
-
-    void interfaceSetUp(){
-        inputText =  (EditText) findViewById(R.id.text_input);
-        encodeButton = (Button) findViewById(R.id.encodeButton);
-        sosButton = (Button) findViewById((R.id.sosButton));
-
-        sosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textToEncode = "SOS";
-                flashing(textToEncode);
-            }
-        });
-
-        encodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String textToEncode = String.valueOf(inputText.getText());
-                flashing(textToEncode);
-            }
-
-        });
-    }
-
-    void flashing(String textToEncode){
         setContentView(R.layout.flashing_activity);
         codeView = (TextView) findViewById(R.id.codeView);
         stopButton = (Button) findViewById(R.id.stopButton);
@@ -146,13 +100,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                setContentView(R.layout.activity_main);
-                interfaceSetUp();
-            }
-        }, time);
     }
 
     void flashOn(){
@@ -169,45 +116,5 @@ public class MainActivity extends AppCompatActivity {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
-    }
-
-    private void flash_check(){
-        hasFlash = getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
-
-        if (!hasFlash) {
-            // device doesn't support flash
-            // Show alert message and close the application
-            AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
-                    .create();
-            alert.setTitle("Error");
-            alert.setMessage("Sorry, your device doesn't support flash light!");
-            alert.setButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // closing the application
-                    finish();
-                }
-            });
-            alert.show();
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        Log.d("MainActivity_Settings", "s-a apelat onSaveInstanceState");
-        super.onSaveInstanceState(savedInstanceState);
-
-        savedInstanceState.putString("TextToEncode", String.valueOf(inputText.getText()));
-    }
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState){
-        String finalString = savedInstanceState.getString("TextToEncode");
-        inputText.setText(finalString);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.my_menu,menu);
-        return true;
     }
 }
