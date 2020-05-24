@@ -1,10 +1,7 @@
 package com.example.morsecode;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Translator  {
@@ -60,6 +57,6 @@ public class Translator  {
                 text += code_to_Char.get(leters[i]);
             }
         }
-        return text;
+        return text.toLowerCase();
     }
 }

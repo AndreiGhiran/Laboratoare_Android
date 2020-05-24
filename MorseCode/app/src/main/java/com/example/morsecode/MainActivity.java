@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
@@ -23,9 +22,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean hasFlash;
     Translator translator;
     String text;
+    long unit = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         String code = translator.Encode(textToEncode);
         final String[] leters = code.split("/");
         int j = 1;
-        long time = 0, unit = 500;
+        long time = 0;
         codeView.setText(leters[j]);
         for (int i = 1; i < code.length()-1; i++){
             switch(code.charAt(i)){
@@ -172,16 +170,13 @@ public class MainActivity extends AppCompatActivity {
         hasFlash = getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
         if (!hasFlash) {
-            // device doesn't support flash
-            // Show alert message and close the application
             AlertDialog alert = new AlertDialog.Builder(MainActivity.this)
                     .create();
             alert.setTitle("Error");
             alert.setMessage("Sorry, your device doesn't support flash light!");
             alert.setButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    // closing the application
-                    //finish();
+                    finish();
                 }
             });
             alert.show();
@@ -211,14 +206,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.settings:
-//                Log.d("MainActivity_Settings", "a fost apasat Settings");
-//                Intent intent = new Intent(this, SetingsMenu.class);
-//                startActivity(intent);
-                return true;
             case R.id.sendSMS:
                 Intent smsIntent = new Intent(this, smsActivity.class);
                 startActivity(smsIntent);
+                return true;
+            case R.id.decodeSMS:
+                Intent decodeIntent = new Intent(this, decodeActivity.class);
+                startActivity(decodeIntent);
+                return true;
+            case R.id.instructions:
+                Intent instructionsIntent = new Intent(this,instructionsActivity.class);
+                startActivity(instructionsIntent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

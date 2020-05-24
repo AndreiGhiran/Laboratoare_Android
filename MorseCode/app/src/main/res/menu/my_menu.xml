@@ -3,18 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/share"
-        android:title="SMS"
+        android:title="Messages"
         app:showAsAction="ifRoom">
         <menu>
             <item android:id="@+id/sendSMS"
-                android:title="Send Coded SMS" />
+                android:title="Send Coded Message" />
             <item android:id="@+id/decodeSMS"
-                android:title="Decode SMS" />
+                android:title="Decode a Message" />
         </menu>
     </item>
 
-    <item android:id="@+id/settings"
-        android:title="Settings" />
-
+    <item
+        android:id="@+id/instructions"
+        android:title="Instructions"/>
 
 </menu>

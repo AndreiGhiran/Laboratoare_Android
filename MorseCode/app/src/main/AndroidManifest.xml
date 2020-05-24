@@ -22,6 +22,15 @@
         </activity>
 
         <activity android:name=".smsActivity"></activity>
+        <activity android:name=".instructionsActivity"></activity>
+
+        <activity android:name=".decodeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
 
     </application>
 

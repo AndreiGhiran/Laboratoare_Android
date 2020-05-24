@@ -3,6 +3,7 @@ package com.example.morsecode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,11 +59,21 @@ public class smsActivity extends Activity {
                 sendIntent.setType("text/plain");
                 String title = "Send the code with";
                 Intent chooser = Intent.createChooser(sendIntent, title);
-                // Verify that the intent will resolve to an activity
                 if (sendIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(chooser);
                 }
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("TextToSend", String.valueOf(inputText.getText()));
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        String finalString = savedInstanceState.getString("TextToSend");
+        inputText.setText(finalString);
     }
 }
