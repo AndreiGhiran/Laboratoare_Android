@@ -10,7 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="678dp"
         android:layout_height="230dp"
-        android:text='Decoding Instructions:\nCoded words and spaces must be between "/"\n Example: "/../.-/ /../.-/"\nTo decode a message from another app share the coded message using this app.'
+        android:text='Decoding Instructions:\nCoded letters and spaces must be between "/"\n Example: "/../.-/ /../.-/"\nTo decode a message from another app share the coded message using this app.'
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="20sp"
@@ -20,5 +20,5 @@
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintVertical_bias="0.281" />
 </androidx.constraintlayout.widget.ConstraintLayout>

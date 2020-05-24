@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="402dp"
-        android:layout_height="517dp"
-        android:text='Decoding Instructions:\nCoded words and spaces must be between "/"\n Example: "/../.-/ /../.-/"\nTo decode a message from another app share the coded message using this app.'
+        android:layout_width="366dp"
+        android:layout_height="518dp"
+        android:text='Decoding Instructions:\nCoded letters and spaces must be between "/"\n Example: "/../.-/ /../.-/"\nTo decode a message from another app share the coded message using this app.'
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="20sp"
